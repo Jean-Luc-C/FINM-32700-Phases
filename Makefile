@@ -20,6 +20,7 @@ profile: src/main.cpp src/kernels.cpp src/benchmark.cpp
 # Benchmark with no optimization (for inlining comparison)
 noopt: src/main.cpp src/kernels.cpp src/benchmark.cpp
 	$(CXX) $(CXXFLAGS_DEBUG) -o main_noopt.exe $^
+	./main_noopt.exe
 
 test: tests.exe
 	./tests.exe
