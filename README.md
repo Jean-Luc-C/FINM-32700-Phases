@@ -1,6 +1,6 @@
-# High-Performance Linear Algebra Kernels
+# FINM 32700 - Advanced Computing for Finance
 
-**FINM 32700 — Advanced Computing, Phase 1**
+**Phase 1: High-Performance Linear Algebra Kernels**
 
 ## Team
 
