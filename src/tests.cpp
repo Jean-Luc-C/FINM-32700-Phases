@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "kernels.h"
+#include "kernels_optimized.h"
 
 const double TOLERANCE = 1e-9;
 
@@ -97,11 +98,33 @@ void test_mm_transposed_b() {
     delete[] result;
 }
 
+void test_mm_tiled() {
+    // A: 2x3 [[1, 2, 3], [4, 5, 6]]
+    // B: 3x2 [[7, 8], [9, 10], [11, 12]]
+    double* A = new double[6]{1, 2, 3, 4, 5, 6};
+    double* B = new double[6]{7, 8, 9, 10, 11, 12};
+    double* result = new double[4];
+    double expected[] = {58, 64, 139, 154};
+
+    multiply_mm_tiled(A, 2, 3, B, 3, 2, result, 2);
+
+    if (check_equal(result, expected, 4)) {
+        std::cout << "PASS: multiply_mm_tiled" << std::endl;
+    } else {
+        std::cout << "FAIL: multiply_mm_tiled" << std::endl;
+    }
+
+    delete[] A;
+    delete[] B;
+    delete[] result;
+}
+
 int main() {
     std::cout << "Running kernel tests..." << std::endl;
     test_mv_row_major();
     test_mv_col_major();
     test_mm_naive();
     test_mm_transposed_b();
+    test_mm_tiled();
     return 0;
 }

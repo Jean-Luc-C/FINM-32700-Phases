@@ -8,6 +8,7 @@
 #include <cstdlib>
 #endif
 #include "kernels.h"
+#include "kernels_optimized.h"
 #include "benchmark.h"
 
 const int ALIGNMENT = 64; // bytes
@@ -80,6 +81,11 @@ void benchmark_mm(int n, int iterations) {
         multiply_mm_transposed_b(A, n, n, Bt, n, n, result);
     }, iterations);
     print_result("MM Transposed-B (" + label + ")", r2);
+
+    auto r3 = run_benchmark("MM Tiled        (" + label + ")", [&]() {
+        multiply_mm_tiled(A, n, n, B, n, n, result);
+    }, iterations);
+    print_result("MM Tiled        (" + label + ")", r3);
 
     delete[] A;
     delete[] B;
