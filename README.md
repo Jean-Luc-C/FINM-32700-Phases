@@ -69,4 +69,4 @@ gprof (run via WSL) showed the two multiply kernels accounted for 99.7% of execu
  
 ### 7. Teamwork Reflection
  
-This project was completed individually. The assignment structure would be very open ended for a team since probably the easiest part, the base kernel functions, was the only part with a prescribed way of splitting up the work. I liked working by myself I think having teammates wouldn't have really added much. Although there would have been more brainstorming with another teammate, which would have been nice
+This project was completed individually. The assignment structure would be very open ended for a team since probably the easiest part, the base kernel functions, was the only part with a prescribed way of splitting up the work. I liked working by myself I think having teammates wouldn't have really added much. Although there would have been more brainstorming with another teammate, which would have been nice.
