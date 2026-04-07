@@ -61,7 +61,7 @@ Alignment places data at addresses that are multiples of a boundary (e.g., 64 by
  
 ### 5. Compiler Optimizations and Inlining
  
-Transposed-B saw a 5.1x speedup from `-O0` to `-O3`, while naive saw only 1.3x. The compiler can vectorize sequential access patterns but cannot fix cache-unfriendly access orders. Cache-aware code and compiler optimization provide multiplicative gains together. Potential drawbacks of aggressive optimization include longer compile times, and harder debugging (variables get optimized out, code is reordered)
+Transposed-B saw a 5.1x speedup from `-O0` to `-O3`, while naive saw only 1.3x. The compiler can vectorize sequential access patterns but cannot fix cache-unfriendly access orders. Cache-aware code and compiler optimization provide multiplicative gains together. Potential drawbacks of aggressive optimization include longer compile times, and harder debugging (variables get optimized out, code is reordered).
  
 ### 6. Profiling and Bottlenecks
  
