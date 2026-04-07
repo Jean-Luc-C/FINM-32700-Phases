@@ -13,10 +13,6 @@ main.exe: src/main.cpp src/kernels.cpp src/benchmark.cpp
 tests.exe: src/tests.cpp src/kernels.cpp
 	$(CXX) $(CXXFLAGS_RELEASE) -o $@ $^
 
-# Profile build (for gprof)
-profile: src/main.cpp src/kernels.cpp src/benchmark.cpp
-	$(CXX) $(CXXFLAGS_DEBUG) -o main_profile.exe $^
-
 # Benchmark with no optimization (for inlining comparison)
 noopt: src/main.cpp src/kernels.cpp src/benchmark.cpp
 	$(CXX) $(CXXFLAGS_DEBUG) -o main_noopt.exe $^
@@ -31,4 +27,4 @@ run: main.exe
 clean:
 	rm -f *.exe *.out
 
-.PHONY: all test run clean profile noopt
+.PHONY: all test run clean noopt

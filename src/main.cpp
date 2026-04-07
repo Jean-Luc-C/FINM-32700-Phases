@@ -2,7 +2,11 @@
 #include <iomanip>
 #include <cstdlib>
 #include <cstring>
+#ifdef _WIN32
 #include <malloc.h>
+#else
+#include <cstdlib>
+#endif
 #include "kernels.h"
 #include "benchmark.h"
 
@@ -83,6 +87,7 @@ void benchmark_mm(int n, int iterations) {
     delete[] result;
 }
 
+#ifdef _WIN32
 void benchmark_mm_aligned(int n, int iterations) {
     size_t size = n * n * sizeof(double);
 
@@ -142,6 +147,7 @@ void benchmark_mm_aligned(int n, int iterations) {
     _aligned_free(aBt);
     _aligned_free(aResult);
 }
+#endif
 
 // Sums every nth element of a large array to isolate cache stride effects
 void benchmark_stride_access(int stride, int iterations) {
@@ -173,39 +179,52 @@ void benchmark_stride_access(int stride, int iterations) {
     delete[] data;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     srand(42);
 
-    std::cout << "=== Matrix-Vector Benchmarks ===" << std::endl;
-    benchmark_mv(64, 64, 1000);
-    benchmark_mv(256, 256, 100);
-    benchmark_mv(1024, 1024, 50);
-    benchmark_mv(4096, 4096, 10);
+    bool mm_only = false;
+    for (int i = 1; i < argc; i++) {
+        if (std::string(argv[i]) == "--mm-only") {
+            mm_only = true;
+        }
+    }
 
-    std::cout << std::endl;
+    if (!mm_only) {
+        std::cout << "=== Matrix-Vector Benchmarks ===" << std::endl;
+        benchmark_mv(64, 64, 1000);
+        benchmark_mv(256, 256, 100);
+        benchmark_mv(1024, 1024, 50);
+        benchmark_mv(4096, 4096, 10);
+        std::cout << std::endl;
+    }
+
     std::cout << "=== Matrix-Matrix Benchmarks ===" << std::endl;
     benchmark_mm(64, 100);
     benchmark_mm(256, 10);
     benchmark_mm(512, 5);
     benchmark_mm(1024, 3);
 
-    std::cout << std::endl;
-    std::cout << "=== Aligned vs Unaligned Memory ===" << std::endl;
-    benchmark_mm_aligned(256, 10);
-    benchmark_mm_aligned(512, 5);
-    benchmark_mm_aligned(1024, 3);
+    if (!mm_only) {
+        #ifdef _WIN32
+        std::cout << std::endl;
+        std::cout << "=== Aligned vs Unaligned Memory ===" << std::endl;
+        benchmark_mm_aligned(256, 10);
+        benchmark_mm_aligned(512, 5);
+        benchmark_mm_aligned(1024, 3);
+        #endif
 
-    std::cout << std::endl;
-    std::cout << "=== Cache Stride Analysis ===" << std::endl;
-    std::cout << "(Summing every Nth element of a 64MB array)" << std::endl;
-    benchmark_stride_access(1, 20);
-    benchmark_stride_access(2, 20);
-    benchmark_stride_access(4, 20);
-    benchmark_stride_access(8, 20);
-    benchmark_stride_access(16, 20);
-    benchmark_stride_access(32, 20);
-    benchmark_stride_access(64, 20);
-    benchmark_stride_access(128, 20);
+        std::cout << std::endl;
+        std::cout << "=== Cache Stride Analysis ===" << std::endl;
+        std::cout << "(Summing every Nth element of a 64MB array)" << std::endl;
+        benchmark_stride_access(1, 20);
+        benchmark_stride_access(2, 20);
+        benchmark_stride_access(4, 20);
+        benchmark_stride_access(8, 20);
+        benchmark_stride_access(16, 20);
+        benchmark_stride_access(32, 20);
+        benchmark_stride_access(64, 20);
+        benchmark_stride_access(128, 20);
+    }
 
     return 0;
 }

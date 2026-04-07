@@ -1,3 +1,5 @@
 *.o
 *.exe
 gmon.out
+profile_output.txt
+main_profile
