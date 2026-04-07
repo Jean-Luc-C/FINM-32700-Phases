@@ -10,13 +10,13 @@
 
 ```
 src/
-├── kernels.h / kernels.cpp               # Baseline kernel implementations
-├── kernels_optimized.h / kernels_optimized.cpp  # Tiled matrix multiplication
-├── benchmark.h / benchmark.cpp            # Timing and statistics utilities
-├── tests.cpp                              # Correctness tests
-└── main.cpp                               # Benchmark driver
+├── kernels.h / kernels.cpp                         # Baseline kernel implementations
+├── kernels_optimized.h / kernels_optimized.cpp     # Tiled matrix multiplication
+├── benchmark.h / benchmark.cpp                     # Timing and statistics utilities
+├── tests.cpp                                       # Correctness tests
+└── main.cpp                                        # Benchmark driver
 report/
-└── report.pdf                             # Performance analysis report
+└── report.pdf                                      # Performance analysis report
 Makefile
 ```
 
